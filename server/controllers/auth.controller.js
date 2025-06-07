@@ -145,7 +145,7 @@ export const updateProfile = async ( req, res ) =>{
       ]
     });
 
-    const updatedUser = await User.findByIdAndUpdate( userId , {
+     await User.findByIdAndUpdate( userId , {
       profilePicture: uploadResponse.secure_url,
     }, { new: true });
 

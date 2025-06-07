@@ -6,7 +6,7 @@ import cloudinary from "../lib/cloudinary.js";
 
 export const getAllUsers = async (req, res) => {
     try {
-        console.log(req.user)
+      
         const userID = req.user._id;
         const filterUsers = await User.find({_id: {$ne: userID}}).select('-password');
 
@@ -36,7 +36,7 @@ export const getAllMessages = async (req , res )=> {
             ]
         }).sort({ createdAt: 1 });
         res.status(StatusCodes.OK).json({
-            message: "Messages fetched successfully",
+            messages: "Messages fetched successfully",
             messages
         });
     } catch (error) {

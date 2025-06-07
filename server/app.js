@@ -8,7 +8,7 @@ const createApp = () =>{
     const app = express()
 
     // Middleware to parse JSON bodies
-    app.use(express.json());
+    app.use(express.json({ limit: '5mb' }));
     app.use(cors({
         origin: process.env.CLIENT_URL,
         credentials: true
