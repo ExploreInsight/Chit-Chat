@@ -18,7 +18,7 @@ export const useChatStore = create((set, get) => ({
       // set({ users }); // always an array
       set({users: res.data.users || []})
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data.message);
     } finally {
       set({ isUsersLoading: false });
     }
@@ -42,33 +42,36 @@ export const useChatStore = create((set, get) => ({
         `/messages/send/${selectedUser._id}`,
         messageData
       );
-      set({ messages: [...messages, res.data] });
+      set({ messages: [...messages, res.data.message] });
     } catch (error) {
       toast.error(error.response.data.message);
     }
   },
 
-  // subscribeToMessages: () => {
-  //   const { selectedUser } = get();
-  //   if (!selectedUser) return;
+  subscribeToMessages: () => {
+    const { selectedUser } = get();
+    if (!selectedUser) return;
 
-  //   const socket = useAuthStore.getState().socket;
+    const socket = useAuthStore.getState().socket;
 
-  //   socket.on("newMessage", (newMessage) => {
-  //     const isMessageSentFromSelectedUser =
-  //       newMessage.senderId === selectedUser._id;
-  //     if (!isMessageSentFromSelectedUser) return;
+    socket.on("newMessage", (newMessage) => {
+      
+      const isMessageSentFromSelectedUser =
+        newMessage.senderId === selectedUser._id;
+      if (!isMessageSentFromSelectedUser) return;
 
-  //     set({
-  //       messages: [...get().messages, newMessage],
-  //     });
-  //   });
-  // },
+      // console.log(messages, "messages in chat store");
+      set({
+        messages: [...get().messages, newMessage],
+      });
 
-  // unsubscribeFromMessages: () => {
-  //   const socket = useAuthStore.getState().socket;
-  //   socket.off("newMessage");
-  // },
+    });
+  },
+
+  unsubscribeFromMessages: () => {
+    const socket = useAuthStore.getState().socket;
+    socket.off("newMessage");
+  },
 
   setSelectedUser: (selectedUser) => set({ selectedUser }),
 }));

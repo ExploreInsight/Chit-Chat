@@ -2,6 +2,7 @@ import { StatusCodes } from "http-status-codes";
 import User from "../models/user.model.js";
 import Message from "../models/message.model.js";
 import cloudinary from "../lib/cloudinary.js";
+import { getReceiverScoketId, getScoketInstance } from "../lib/socket.js";
 
 
 export const getAllUsers = async (req, res) => {
@@ -55,6 +56,7 @@ export const sendMessages = async (req, res) => {
         const senderId = req.user._id;
         
         const { text, image } = req.body;
+
         if (!text && !image) {
             return res.status(StatusCodes.BAD_REQUEST).json({
                 message: "Message text or image is required."
@@ -72,7 +74,12 @@ export const sendMessages = async (req, res) => {
         })
         await newMessage.save();
 
-        // TODO: Send push notification to receiver when a new message is received.
+        const io = getScoketInstance();
+        // Emit the new message to the receiver's socket
+        const receiverScoketId = getReceiverScoketId(receiverId);
+        if(receiverScoketId){
+            io.to(receiverScoketId).emit('newMessage',newMessage)
+        }
 
         res.status(StatusCodes.CREATED).json({
             message: "Message sent successfully",
