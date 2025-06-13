@@ -4,11 +4,12 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "build": "npm install && npm install --prefix client && npm run build --prefix client",
     "dev": "nodemon server/server.js",
     "start": "node server/server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "chirag chandel",
   "license": "ISC",
   "type": "module",
   "dependencies": {

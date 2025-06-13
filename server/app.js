@@ -3,9 +3,13 @@ import authRoutes from "./routes/auth.route.js"
 import messageRoutes from "./routes/message.route.js";
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import path from 'path';
+
 const createApp = () =>{
 
-    const app = express()
+    const app = express();
+
+    const __dirname = path.resolve();
 
     // Middleware to parse JSON bodies
     app.use(express.json({ limit: '5mb' }));
@@ -16,7 +20,15 @@ const createApp = () =>{
     app.use(cookieParser());
 
     app.use('/api/auth', authRoutes);
-    app.use('/api/messages', messageRoutes)
+    app.use('/api/messages', messageRoutes);
+
+    if(process.env.NODE_ENV === 'production'){
+        app.use(express.static(path.join(__dirname,'/client/dist')));
+
+        app.get("*",(req,res)=>{
+            res.send(path.resolve(__dirname,'client','dist','index.html'))
+        })
+    }
 
     return app;
 }
