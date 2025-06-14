@@ -16,7 +16,7 @@ export const useChatStore = create((set, get) => ({
       const res = await axiosInstance.get("/messages/users");
       // const users = Array.isArray(res.data) ? res.data : res.data?.users || [];
       // set({ users }); // always an array
-      set({users: res.data.users || []})
+      set({ users: res.data.users || [] });
     } catch (error) {
       toast.error(error.response?.data.message);
     } finally {
@@ -54,8 +54,12 @@ export const useChatStore = create((set, get) => ({
 
     const socket = useAuthStore.getState().socket;
 
+    if (!socket) {
+      console.warn("Socket not available yet in subscribeToMessages");
+      return;
+    }
+
     socket.on("newMessage", (newMessage) => {
-      
       const isMessageSentFromSelectedUser =
         newMessage.senderId === selectedUser._id;
       if (!isMessageSentFromSelectedUser) return;
@@ -64,7 +68,6 @@ export const useChatStore = create((set, get) => ({
       set({
         messages: [...get().messages, newMessage],
       });
-
     });
   },
 
