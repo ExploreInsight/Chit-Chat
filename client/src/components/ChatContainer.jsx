@@ -6,6 +6,7 @@ import MessageInput from "./MessageInput";
 import MessageSkeleton from "./skeletons/MessageSkeleton";
 import { useAuthStore } from "../store/useAuthStore";
 import { formatMessageTime } from "../lib/utils";
+import { config } from "dotenv";
 
 const ChatContainer = () => {
   const {
@@ -44,7 +45,7 @@ const ChatContainer = () => {
       </div>
     );
   }
-  
+  console.log(authUser," fromchatcoainer")
   return (
     <div className="flex-1 flex flex-col overflow-auto">
       <ChatHeader />
@@ -53,7 +54,7 @@ const ChatContainer = () => {
         {messages.map((message , i) => (
           <div
             key={message._id}
-            className={`chat ${message.senderId === authUser.userId? "chat-end" : "chat-start"}`}
+            className={`chat ${message.senderId === authUser.user?._id ? "chat-end" : "chat-start"}`}
             ref={messageEndRef}
           >
             <div className=" chat-image avatar">
