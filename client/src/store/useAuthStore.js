@@ -91,7 +91,6 @@ export const useAuthStore = create((set, get) => ({
   connectSocket: () => {
     const { authUser } = get();
     const userId = authUser?.user?._id;
-    // console.log("Connecting socket with user:", authUser);
     if (!authUser || !userId) {
       console.warn("⛔ Cannot connect socket: Missing authUser or userId");
       return;

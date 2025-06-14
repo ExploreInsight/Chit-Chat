@@ -21,7 +21,7 @@ const ProFile = () => {
     };
   };
 
-  console.log("authUser", authUser);
+
 
   return (
     <div className="h-screen pt-20">

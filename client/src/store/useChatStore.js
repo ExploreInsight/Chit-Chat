@@ -64,7 +64,6 @@ export const useChatStore = create((set, get) => ({
         newMessage.senderId === selectedUser._id;
       if (!isMessageSentFromSelectedUser) return;
 
-      // console.log(messages, "messages in chat store");
       set({
         messages: [...get().messages, newMessage],
       });

@@ -6,7 +6,7 @@ import MessageInput from "./MessageInput";
 import MessageSkeleton from "./skeletons/MessageSkeleton";
 import { useAuthStore } from "../store/useAuthStore";
 import { formatMessageTime } from "../lib/utils";
-import { config } from "dotenv";
+
 
 const ChatContainer = () => {
   const {
@@ -45,7 +45,7 @@ const ChatContainer = () => {
       </div>
     );
   }
-  console.log(authUser," fromchatcoainer")
+  
   return (
     <div className="flex-1 flex flex-col overflow-auto">
       <ChatHeader />
@@ -61,7 +61,7 @@ const ChatContainer = () => {
               <div className="size-10 rounded-full border">
                 <img
                   src={
-                    message.senderId === authUser.userId
+                    message.senderId === authUser.user._id
                       ? authUser.profilePicture || "/avatar.png"
                       : selectedUser.profilePicture || "/avatar.png"
                   }
