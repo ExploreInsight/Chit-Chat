@@ -98,7 +98,6 @@ export const useAuthStore = create((set, get) => ({
     }
 
     const socket = io(BASE_URL, {
-      path: "/socket.io",
       query: { userId },
     });
     socket.connect();

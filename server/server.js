@@ -20,7 +20,6 @@ const startServer = async () => {
         origin: process.env.CLIENT_URL,
         credentials: true,
       },
-      path: "/socket.io",
     });
 
     setScoketInstance(io);
