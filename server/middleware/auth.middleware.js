@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { StatusCodes } from "http-status-codes";
 import User from "../models/user.model.js";
+
 export const protectRoute = async (req, res, next) => {
   try {
     const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
