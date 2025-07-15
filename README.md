@@ -81,7 +81,7 @@ A responsive, full-stack real-time **Chat Application** built using the **MERN s
 ```shell
 
 https://github.com/ExploreInsight/Chit-Chat.git
-cd product-manager-pern
+cd chit-chat
 
 ```
 ### Install Dependencies
